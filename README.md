@@ -9,7 +9,7 @@ Ademas de utilizar workers y Pub/Sub de GCP para las colas y la gestion de proce
 - Docker
 - Python con Flask
 - PostgreSQL
-- Pub/Sub (Colas)
+- Google Pub/Sub en local (Colas)
 - Workers (Procesos en segundo plano)
 
 ## Erroes típicos
