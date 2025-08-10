@@ -1,0 +1,61 @@
+services:
+
+  # PostgreSQL database service
+  db: 
+    image: postgres:16
+    container_name: postgres_container
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Server servcice
+  server: 
+    build: ./server
+    container_name: server_container
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  # Client service
+  client: 
+    build: ./client
+    container_name: client_container
+    restart: always
+    volumes:
+      - ./client:/app # Para que funcione el hot reload
+      - /app/node_modules # Guada las dependencias para evitar errores
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Para que funcione el hot reload en Windows
+    depends_on:
+      - server
+
+  # Worker service
+  worker:
+    build: ./worker
+    container_name: worker_container
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - server
+
+  # Emulador de Google Pub/Sub en local
+  pubsub_emulator:
+    image: google/cloud-sdk:latest
+    container_name: pubsub_emulator_container
+    command: gcloud beta emulators pubsub start --host-port=0.0.0.0:8085
+    ports:
+      - "8085:8085"
+
+# NOTA: Todos los servicios estan en la misa red (default). Eso hace que todos esten comunicados entre si.
+# Si se quisiera aislar conexsiones y servicios se podrian crear mas redes y asignar los servicios a las redes que se deseen.
