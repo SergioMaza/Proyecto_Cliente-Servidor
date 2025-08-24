@@ -5,8 +5,8 @@ import Worker_ProcesarVideoEjemplo from "./pruebas/Worker_ProcesarVideoEjemplo";
 export default function App() {
   return (
     //<Conexion_Basica_Client_Server />
-    //<Conexion_BBDD />
-    <Worker_ProcesarVideoEjemplo />
+    <Conexion_BBDD />
+    //<Worker_ProcesarVideoEjemplo />
   )
 }
 
