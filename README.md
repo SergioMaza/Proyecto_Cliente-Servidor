@@ -4,6 +4,10 @@ Prueba de docker-compose para conectar un client (React + Vite)
 con un server (Pyhton) y con una bd (PostgreSQL)
 Ademas de utilizar workers y Pub/Sub de GCP para las colas y la gestion de procesos
 
+## Estructura principal del proyecto
+- client/App.jsx: Pagina principal donde usar los diferentes componentes de client/pruebas/ para probar los diferentes servicios
+- server/app.py: Diferentes endpoints para las pruebas
+
 ## Tecnologias usadas:
 
 - Docker
